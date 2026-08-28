@@ -1,0 +1,82 @@
+.cargo-container {
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .page-title {
+      font-size: 28px;
+      margin: 0;
+      color: #2c3e50;
+    }
+  }
+
+  .add-cargo-form {
+    margin-bottom: 30px;
+
+    h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+
+      &:last-of-type {
+        margin-bottom: 20px;
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+
+      .btn {
+        flex: 1;
+      }
+    }
+  }
+
+  .cargo-table-container {
+    h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+
+      &.status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+
+      &.status-in-transit {
+        background-color: #cfe2ff;
+        color: #084298;
+      }
+
+      &.status-delivered {
+        background-color: #d1e7dd;
+        color: #0f5132;
+      }
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
+}
