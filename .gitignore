@@ -1,0 +1,32 @@
+# Go
+/build
+*.exe
+*.dll
+*.so
+*.dylib
+/bin
+/dist
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+/frontend/dist
+/frontend/out-tsc
+
+# Environment
+.env
+.env.local
