@@ -1,231 +1,164 @@
 # 📋 Cargo Management App - Development To-Do List
 
-**Project Status:** In Development  
-**Last Updated:** 2026-09-15  
+**Project Status:** In Development — backend schema and service foundation completed  
+**Last Updated:** 2026-09-18  
 **Branch:** main
 
 ---
 
-## 🎯 Main Development Phases
+## ✅ Completed
 
-### Phase 1: Database Schema & Backend CRUD Operations
-#### 1.1 Create and Fill Database Schema ⭐ **CRITICAL**
-- [ ] **1.1.1** Finalize and validate cargo table schema
-  - Priority: 🔴 **CRITICAL**
-  - Status: Schema exists, needs review
-  - Details: Ensure all fields are properly defined (id, name, status, weight, destination, date, created_at, updated_at)
-  - Extra: Add indexes on frequently queried fields (status, destination)
-- [ ] **1.1.2** Finalize and validate shipments table schema
-  - Priority: 🔴 **CRITICAL**
-  - Status: Schema exists, needs review
-  - Details: Validate foreign key relationships and constraints
-  - Extra: Add indexes on cargo_id and status
-- [ ] **1.1.3** Complete users table implementation
-  - Priority: 🔴 **CRITICAL**
-  - Status: Schema exists, not implemented
-  - Details: username, email, password, role, timestamps
-  - Extra: Add unique constraints, password hashing support
-- [ ] **1.1.4** Create database migration system
-  - Priority: 🟡 **MEDIUM**
-  - Status: Not started
-  - Details: Set up version control for database changes
-  - Extra: Add rollback capability
-- [ ] **1.1.5** Add database seed data (test fixtures)
-  - Priority: 🟡 **MEDIUM**
-  - Status: Not started
-  - Details: Create sample cargo and shipment data for testing
-  - Extra: Generate realistic test data with multiple statuses
+### Backend database foundation
+- [x] Removed user-login, authentication, roles, tokens, and user-account functionality.
+- [x] Removed the `users` table from the operational database design.
+- [x] Defined the operational schemas for:
+  - [x] `driver`
+  - [x] `loader`
+  - [x] `vehicle`
+  - [x] `well`
+  - [x] `load`
+- [x] Added primary keys, required fields, unique constraints, timestamps, and foreign keys.
+- [x] Enabled SQLite foreign-key enforcement.
+- [x] Added relationship indexes for vehicles and loads.
+- [x] Added delete restrictions for referenced drivers, loaders, vehicles, and wells.
 
-#### 1.2 Write CRUD Code for Database Tables ⭐ **CRITICAL**
-- [ ] **1.2.1** Implement User CRUD operations
-  - Priority: 🔴 **CRITICAL**
-  - Status: Schema only
-  - Tasks: registration, login, profile read/update, account deletion, and admin user listing
-  - Extra: Add password validation, email verification
-- [ ] **1.2.2** Enhance Cargo CRUD operations
-  - Priority: 🔴 **CRITICAL**
-  - Status: Partially implemented
-  - Tasks: validate CreateCargo, add status/destination/date-range queries, bulk update/delete
-  - Extra: Add cargo archival, soft delete support
-- [ ] **1.2.3** Enhance Shipment CRUD operations
-  - Priority: 🔴 **CRITICAL**
-  - Status: Partially implemented
-  - Tasks: implement list/get/update/delete and status/date-range queries
-  - Extra: Add shipment history tracking
-- [ ] **1.2.4** Add advanced query methods
-  - Priority: 🟡 **MEDIUM**
-  - Status: Not started
-  - Tasks: search, pagination, sorting, and combined filtering
-  - Extra: Full-text search support
-- [ ] **1.2.5** Implement data validation
-  - Priority: 🟡 **MEDIUM**
-  - Status: Not started
-  - Details: Add validation for all input parameters
-  - Extra: Custom error messages, input sanitization
+### DTOs and domain models
+- [x] Created read models for drivers, loaders, vehicles, wells, and loads.
+- [x] Created write DTOs:
+  - [x] `DriverDTO`
+  - [x] `LoaderDTO`
+  - [x] `VehicleDTO`
+  - [x] `WellDTO`
+  - [x] `LoadDTO`
+- [x] Excluded generated IDs and timestamps from write DTOs.
+
+### Database services
+- [x] Implemented driver CRUD services.
+- [x] Implemented loader CRUD services.
+- [x] Implemented vehicle CRUD services.
+- [x] Implemented well CRUD services.
+- [x] Implemented load CRUD services.
+- [x] Added load queries by driver, well, and active/inactive status.
+- [x] Added required-field validation for core create operations.
+- [x] Added not-found handling for reads, updates, and deletes.
+
+### Application cleanup
+- [x] Removed the old cargo/shipment/user-oriented Wails bindings from `main.go`.
+- [x] Kept application startup and shutdown connected to the new database package.
 
 ---
 
-### Phase 2: Frontend Component Generation & Enhancement
-#### 2.1 Generate Components for Frontend ⭐ **CRITICAL**
-- [ ] **2.1.1** Create Shared Components Module
-  - Priority: 🔴 **CRITICAL**
-  - Status: Not started
-  - Components: Button, Card, Modal, LoadingSpinner, ToastNotification, ConfirmDialog
-  - Styling: Minimalistic, soft colors, Material Design
-- [ ] **2.1.2** Generate Cargo Management Components
-  - Priority: 🔴 **CRITICAL**
-  - Status: Not started
-  - Components: CargoList, CargoDetail, CargoForm, CargoFilter, CargoBulkActions
-  - Styling: Soft colors, high contrast text
-  - Extra: Export to CSV, print view
-- [ ] **2.1.3** Generate Shipment Management Components
-  - Priority: 🔴 **CRITICAL**
-  - Status: Not started
-  - Components: ShipmentList, ShipmentDetail, ShipmentForm, ShipmentTracking, ShipmentFilter
-  - Styling: Soft colors with Material Design
-  - Extra: Real-time status updates, tracking map
-- [ ] **2.1.4** Generate User Management Components
-  - Priority: 🟡 **MEDIUM**
-  - Status: Not started
-  - Components: Login, Register, UserProfile, UserList, UserForm
-  - Extra: Password reset, two-factor authentication UI
-- [ ] **2.1.5** Generate Layout Components
-  - Priority: 🔴 **CRITICAL**
-  - Status: Partially started
-  - Components: Navbar, Sidebar, Layout, Breadcrumb
-  - Styling: Minimalistic, soft colors, Material Design
+## 🚧 Remaining backend work
 
-#### 2.2 Connect Components to Database Tables 🔗
-- [ ] **2.2.1** Create CargoService: getAllCargo, getCargoById, createCargo, updateCargo, deleteCargo, getCargoStats, filterCargo
-- [ ] **2.2.2** Create ShipmentService: list/get shipments, get by cargo ID, create/update/delete
-- [ ] **2.2.3** Create UserService: login, register, current user, update profile, logout
-- [ ] **2.2.4** Create AuthService: authentication, roles, token access, token refresh
-- [ ] **2.2.5** Integrate with Wails runtime: wrapper, error handling, and logging
+### Database quality and operations
+- [ ] Add a versioned migration system with rollback support.
+- [ ] Add database seed data and repeatable test fixtures.
+- [ ] Add complete validation for every DTO, including:
+  - [ ] Date and date-range validation.
+  - [ ] Positive numeric values for mileage, weights, rates, and totals.
+  - [ ] Valid foreign-key references before writes.
+  - [ ] VIN, license, ticket, and identifier format validation.
+- [ ] Return domain-specific validation and conflict errors instead of raw SQLite errors.
+- [ ] Add transaction helpers for multi-entity operations.
+- [ ] Add pagination, sorting, and combined filtering to list services.
+- [ ] Add search support where required.
+- [ ] Add service and database tests, including foreign-key and uniqueness tests.
 
-#### 2.3 Upgrade Components Functionality 🚀
-- [ ] **2.3.1** Add Angular Reactive Forms validation and real-time feedback
-- [ ] **2.3.2** Add data tables with sorting, filtering, pagination, and row selection
-- [ ] **2.3.3** Add loading states, errors, success notifications, and retry mechanisms
-- [ ] **2.3.4** Add responsive design for mobile, tablet, and desktop
-- [ ] **2.3.5** Install and apply Angular Material components, theme, and icons
+### Wails/API integration
+- [ ] Add Wails application methods that expose the new DTO-based services.
+- [ ] Add consistent response DTOs for the frontend.
+- [ ] Add application-level error handling and logging.
+- [ ] Add frontend service wrappers for drivers, loaders, vehicles, wells, and loads.
 
 ---
 
-### Phase 3: Main View & Navigation Design
-#### 3.1 Design Main Dashboard View ⭐ **CRITICAL**
-- [ ] **3.1.1** Create dashboard layout with header, sidebar, content area, and footer
-- [ ] **3.1.2** Add quick stats for cargo count, total weight, in-transit shipments, and completed deliveries
-- [ ] **3.1.3** Add Chart.js/ng2-charts visualizations for status, shipments, and weight
-- [ ] **3.1.4** Add a recent activity feed with the last ten activities and timestamps
-- [ ] **3.1.5** Create quick access actions for cargo, shipments, and reports
+## 🚧 Remaining frontend work
 
-#### 3.2 Design Navigation System 🗺️
-- [ ] **3.2.1** Create routes: /dashboard, /cargo, /cargo/:id, /cargo/create, /shipment, /shipment/:id, /reports, /settings, /users
-- [ ] **3.2.2** Create a collapsible sidebar with icons, labels, active state, and animations
-- [ ] **3.2.3** Create top navigation with title, global search, user menu, notifications, and settings
-- [ ] **3.2.4** Implement AuthGuard, RoleGuard, and UnsavedChangesGuard
-- [ ] **3.2.5** Add dynamic, clickable breadcrumb navigation
+### Shared and operational components
+- [ ] Create shared Button, Card, Modal, LoadingSpinner, Toast, and ConfirmDialog components.
+- [ ] Create driver management screens.
+- [ ] Create loader management screens.
+- [ ] Create vehicle management screens.
+- [ ] Create well management screens.
+- [ ] Create load management screens, including forms, filters, details, and status controls.
+- [ ] Add reusable form validation and error messages.
+- [ ] Add data tables with sorting, filtering, pagination, and row selection.
+- [ ] Add loading states, success notifications, retry actions, and error handling.
+- [ ] Add responsive mobile, tablet, and desktop layouts.
+- [ ] Complete Navbar, Sidebar, Layout, and Breadcrumb components.
 
-#### 3.3 Design UI/UX with Material & Soft Colors 🎨
-- [ ] **3.3.1** Create the soft color scheme and dark-mode support
-- [ ] **3.3.2** Implement the Material Design theme, typography, and icons
-- [ ] **3.3.3** Create `frontend/src/styles/_variables.scss` with colors, spacing, typography, shadows, and radius
-- [ ] **3.3.4** Build reusable styled buttons, cards, forms, tables, and modals
-- [ ] **3.3.5** Add page transitions, hover effects, loading animations, and toast notifications
+### Dashboard and navigation
+- [ ] Create the dashboard layout with header, sidebar, content area, and footer.
+- [ ] Add operational statistics for loads, weight, active loads, drivers, vehicles, and wells.
+- [ ] Add recent activity and quick-access actions.
+- [ ] Create routes for dashboard, drivers, loaders, vehicles, wells, loads, reports, and settings.
+- [ ] Add collapsible sidebar navigation and active route indicators.
+- [ ] Add top navigation with search, notifications, and settings.
+- [ ] Add dynamic breadcrumb navigation.
+- [ ] Do not add login, registration, user-management, AuthGuard, or RoleGuard features.
 
----
-
-### Phase 4: Chart Integration & Dependencies
-#### 4.1 Install & Configure Charts Library ⭐ **CRITICAL**
-- [ ] **4.1.1** Install Chart.js and ng2-charts: `npm install chart.js ng2-charts`
-- [ ] **4.1.2** Create reusable line, pie, and bar chart components
-- [ ] **4.1.3** Implement cargo status, shipment timeline, weight distribution, and delivery performance charts
-- [ ] **4.1.4** Add responsive canvas sizing and touch interactions
-
-#### 4.2 Install Additional Dependencies 📦
-- [ ] **4.2.1** Angular Material: `ng add @angular/material`
-- [ ] **4.2.2** Angular Forms & Validators (built-in)
-- [ ] **4.2.3** RxJS operators (built-in)
-- [ ] **4.2.4** Optional date utilities: `date-fns` or `ng-date-pipe`
-- [ ] **4.2.5** HTTP Client (built-in)
+### Styling and visualization
+- [ ] Install and configure Angular Material.
+- [ ] Create the Material Design theme and soft color palette.
+- [ ] Add global SCSS variables for colors, spacing, typography, shadows, and radius.
+- [ ] Build reusable styled tables, forms, cards, and modals.
+- [ ] Add dark-mode support.
+- [ ] Add page transitions, hover effects, loading animations, and toast notifications.
+- [ ] Install Chart.js and `ng2-charts` if charting is still required.
+- [ ] Create responsive line, pie, and bar chart components.
+- [ ] Add load, weight, status, and delivery-performance charts.
 
 ---
 
-## 📊 Implementation Summary
+## 📊 Current implementation status
 
-| Phase | Component | Priority | Estimated Effort |
-|-------|-----------|----------|------------------|
-| 1 | Database Schema & CRUD | 🔴 CRITICAL | 8-10 days |
-| 2 | Frontend Components | 🔴 CRITICAL | 10-12 days |
-| 3 | Main View & Navigation | 🔴 CRITICAL | 5-7 days |
-| 4 | Charts & Styling | 🔴 CRITICAL | 3-4 days |
-| **Total** | **All Features** | - | **26-33 days** |
+| Area | Status | Notes |
+|------|--------|-------|
+| Authentication and login | ✅ Removed | Intentionally excluded from the product design |
+| Operational database schema | ✅ Complete | Driver, loader, vehicle, well, and load tables defined |
+| DTOs and read models | ✅ Complete | DTOs created for all operational entities |
+| Database CRUD services | ✅ Complete | Core CRUD and load-specific queries implemented |
+| Validation | ⚠️ Partial | Required-field validation exists; full domain validation remains |
+| Migrations and seed data | ❌ Not started | Still required |
+| Wails service bindings | ❌ Not started | New services are not yet exposed to the frontend |
+| Frontend screens and services | ❌ Not started | Operational UI remains to be built |
+| Dashboard and navigation | ❌ Not started | Must be designed without authentication screens |
+| Charts and Material styling | ❌ Not started | Optional chart dependencies remain |
 
 ---
 
-## 🎨 Design Guidelines
+## 🎨 Design guidelines
 
-### Color Palette (Soft Colors with High Contrast)
+### Color palette
 ```scss
 $primary-color: #5A9FD4;
 $secondary-color: #6BBD9F;
 $accent-color: #F5A28B;
 $background-color: #F7F8FA;
 $neutral-light: #E8E9EB;
-$neutral-medium: #B8BCC4;
-$neutral-dark: #636E72;
 $text-primary: #2D3436;
 $text-secondary: #636E72;
-$text-light: #95A5A6;
 $success-color: #27AE60;
 $warning-color: #F39C12;
 $danger-color: #E74C3C;
-$info-color: #3498DB;
-$status-pending: #F39C12;
-$status-in-transit: #3498DB;
-$status-delivered: #27AE60;
-$status-cancelled: #E74C3C;
 ```
 
-### Typography
-- **Font Family:** 'Roboto', sans-serif (Material Design standard)
-- **Headings:** Bold, 24-32px
-- **Body:** Regular, 14-16px
-- **Small:** Regular, 12-13px
-
-### Spacing Scale
-- **xs:** 4px
-- **sm:** 8px
-- **md:** 16px
-- **lg:** 24px
-- **xl:** 32px
-
-### Border Radius
-- **sm:** 4px
-- **md:** 8px
-- **lg:** 16px
+### Typography and spacing
+- **Font:** Roboto, sans-serif
+- **Headings:** 24–32px, bold
+- **Body:** 14–16px
+- **Spacing:** 4px, 8px, 16px, 24px, 32px
+- **Border radius:** 4px, 8px, 16px
 
 ---
 
-## 📝 Status Indicators
+## 🔗 Related documents
 
-- 🔴 **CRITICAL** - Must be completed for MVP
-- 🟡 **MEDIUM** - Important but not blocking
-- 🟢 **LOW** - Nice-to-have features
-- ✅ **DONE** - Completed
-- ⚠️ **IN PROGRESS** - Currently being worked on
-- ❌ **BLOCKED** - Waiting for dependencies
+- [README.md](./README.md) — Project overview
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — System architecture (to be created)
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — Contribution guidelines (to be created)
 
 ---
 
-## 🔗 Related Documents
-
-- [README.md](./README.md) - Project overview
-- [ARCHITECTURE.md](./ARCHITECTURE.md) - System architecture (to be created)
-- [CONTRIBUTING.md](./CONTRIBUTING.md) - Contribution guidelines (to be created)
-
----
-
-**Last Updated:** 2026-09-15  
 **Updated By:** ElectroZombie  
-**Branch:** main  
+**Branch:** main
