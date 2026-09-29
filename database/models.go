@@ -1,15 +1,268 @@
 package database
 
+import (
+	"database/sql"
+	"encoding/json"
+)
+
 // Read models returned by services.
-type Driver struct { ID int `json:"id"`; Name string `json:"name"`; LicenseNumber string `json:"license_number"`; Phone string `json:"phone"`; Email string `json:"email"`; Address string `json:"address"`; CreatedAt string `json:"created_at"`; UpdatedAt string `json:"updated_at"` }
-type Loader struct { ID int `json:"id"`; Name string `json:"name"`; Phone string `json:"phone"`; Email string `json:"email"`; Address string `json:"address"`; Company string `json:"company"`; CreatedAt string `json:"created_at"`; UpdatedAt string `json:"updated_at"` }
-type Vehicle struct { ID int `json:"id"`; VecID string `json:"vec_id"`; LicenseID string `json:"license_id"`; TrailerNumber int `json:"trailer_number"`; VIN string `json:"vin"`; LicenseExpiration string `json:"license_expiration"`; DriverID int `json:"driver_id"`; OverweightPermitID string `json:"overweight_permit_id"`; CreatedAt string `json:"created_at"`; UpdatedAt string `json:"updated_at"` }
-type Well struct { ID int `json:"id"`; Name string `json:"name"`; Client string `json:"client"`; Location string `json:"location"`; CreatedAt string `json:"created_at"`; UpdatedAt string `json:"updated_at"` }
-type Load struct { ID int `json:"id"`; Date string `json:"date"`; LoadNumber string `json:"load_number"`; LoaderID int `json:"loader_id"`; WellID int `json:"well_id"`; TicketNumber string `json:"ticket_number"`; Miles float64 `json:"miles"`; DriverID int `json:"driver_id"`; VecID string `json:"vec_id"`; TrailerNumber int `json:"trailer_number"`; NetWeight float64 `json:"net_weight"`; Tons float64 `json:"tons"`; TonRate float64 `json:"ton_rate"`; TotalValue float64 `json:"total_value"`; Status bool `json:"status"`; TicketID string `json:"ticket_id"`; CreatedAt string `json:"created_at"`; UpdatedAt string `json:"updated_at"` }
+
+type Driver struct {
+	ID            int             `json:"id"`
+	Name          string          `json:"name"`
+	LicenseNumber string          `json:"license_number"`
+	Phone         string          `json:"phone"`
+	Email         string          `json:"email"`
+	Address       string          `json:"address"`
+	Meta          json.RawMessage `json:"meta"`
+	CreatedAt     string          `json:"created_at"`
+	UpdatedAt     string          `json:"updated_at"`
+}
+
+type Truck struct {
+	ID                  int             `json:"id"`
+	Name                string          `json:"name"`
+	VIN                 string          `json:"vin"`
+	LicenseExpiration   string          `json:"license_expiration"`
+	DriverID            int             `json:"driver_id"`
+	OverweightPermitID  string          `json:"overweight_permit_id"`
+	CreatedAt           string          `json:"created_at"`
+	UpdatedAt           string          `json:"updated_at"`
+}
+
+type Trailer struct {
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Number    int    `json:"number"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type Well struct {
+	ID        int    `json:"id"`
+	Name      string `json:"name"`
+	Location  string `json:"location"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type Trip struct {
+	ID        int             `json:"id"`
+	Date      string          `json:"date"`
+	LoadNumber string          `json:"load_number"`
+	WellID    int             `json:"well_id"`
+	TicketNumber string        `json:"ticket_number"`
+	DriverID  int             `json:"driver_id"`
+	TruckID   string          `json:"truck_id"`
+	TrailerID int             `json:"id_trailer"`
+	Meta      json.RawMessage `json:"meta"`
+	Status    bool            `json:"status"`
+	TicketID  string          `json:"ticket_id"`
+	CreatedAt string          `json:"created_at"`
+	UpdatedAt string          `json:"updated_at"`
+}
+
+type Category struct {
+	ID        int    `json:"id"`
+	Type      string `json:"type"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type Expense struct {
+	ID        int             `json:"id"`
+	Date      string          `json:"date"`
+	Concept   string          `json:"concept"`
+	CategoryID int            `json:"category_id"`
+	Amount    float64         `json:"amount"`
+	Quantity  float64         `json:"quantity"`
+	Total     float64         `json:"total"`
+	ReceiptID int             `json:"receipt_id"`
+	Meta      json.RawMessage `json:"meta"`
+	CreatedAt string          `json:"created_at"`
+	UpdatedAt string          `json:"updated_at"`
+}
+
+type Income struct {
+	ID        int             `json:"id"`
+	Date      string          `json:"date"`
+	Concept   string          `json:"concept"`
+	CategoryID int            `json:"category_id"`
+	Amount    float64         `json:"amount"`
+	Quantity  float64         `json:"quantity"`
+	Total     float64         `json:"total"`
+	ReceiptID int             `json:"receipt_id"`
+	Meta      json.RawMessage `json:"meta"`
+	CreatedAt string          `json:"created_at"`
+	UpdatedAt string          `json:"updated_at"`
+}
+
+type FuelExpense struct {
+	ID        int `json:"id"`
+	ExpenseID int `json:"id_expense"`
+	DriverID  int `json:"id_driver"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
+}
+
+type Stats struct {
+	ID               int     `json:"id"`
+	NumberWeek       int     `json:"number_week"`
+	DateRangeInit    string  `json:"date_range_init"`
+	DateRangeEnd     string  `json:"date_range_end"`
+	ExpenseTotal     float64 `json:"expense_total"`
+	IncomeTotal      float64 `json:"income_total"`
+	NetTotal         float64 `json:"net_total"`
+	CreatedAt        string  `json:"created_at"`
+	UpdatedAt        string  `json:"updated_at"`
+}
 
 // Write DTOs. IDs and timestamps are generated by the database and excluded.
-type DriverDTO struct { Name string `json:"name"`; LicenseNumber string `json:"license_number"`; Phone string `json:"phone"`; Email string `json:"email"`; Address string `json:"address"` }
-type LoaderDTO struct { Name string `json:"name"`; Phone string `json:"phone"`; Email string `json:"email"`; Address string `json:"address"`; Company string `json:"company"` }
-type VehicleDTO struct { VecID string `json:"vec_id"`; LicenseID string `json:"license_id"`; TrailerNumber int `json:"trailer_number"`; VIN string `json:"vin"`; LicenseExpiration string `json:"license_expiration"`; DriverID int `json:"driver_id"`; OverweightPermitID string `json:"overweight_permit_id"` }
-type WellDTO struct { Name string `json:"name"`; Client string `json:"client"`; Location string `json:"location"` }
-type LoadDTO struct { Date string `json:"date"`; LoadNumber string `json:"load_number"`; LoaderID int `json:"loader_id"`; WellID int `json:"well_id"`; TicketNumber string `json:"ticket_number"`; Miles float64 `json:"miles"`; DriverID int `json:"driver_id"`; VecID string `json:"vec_id"`; TrailerNumber int `json:"trailer_number"`; NetWeight float64 `json:"net_weight"`; Tons float64 `json:"tons"`; TonRate float64 `json:"ton_rate"`; TotalValue float64 `json:"total_value"`; Status bool `json:"status"`; TicketID string `json:"ticket_id"` }
+
+type DriverDTO struct {
+	Name          string          `json:"name"`
+	LicenseNumber string          `json:"license_number"`
+	Phone         string          `json:"phone"`
+	Email         string          `json:"email"`
+	Address       string          `json:"address"`
+	Meta          json.RawMessage `json:"meta"`
+}
+
+type TruckDTO struct {
+	Name                string `json:"name"`
+	VIN                 string `json:"vin"`
+	LicenseExpiration   string `json:"license_expiration"`
+	DriverID            int    `json:"driver_id"`
+	OverweightPermitID  string `json:"overweight_permit_id"`
+}
+
+type TrailerDTO struct {
+	Name   string `json:"name"`
+	Number int    `json:"number"`
+}
+
+type WellDTO struct {
+	Name     string `json:"name"`
+	Location string `json:"location"`
+}
+
+type TripDTO struct {
+	Date         string          `json:"date"`
+	LoadNumber   string          `json:"load_number"`
+	WellID       int             `json:"well_id"`
+	TicketNumber string          `json:"ticket_number"`
+	DriverID     int             `json:"driver_id"`
+	TruckID      string          `json:"truck_id"`
+	TrailerID    int             `json:"id_trailer"`
+	Meta         json.RawMessage `json:"meta"`
+	Status       bool            `json:"status"`
+	TicketID     string          `json:"ticket_id"`
+}
+
+type CategoryDTO struct {
+	Type string `json:"type"`
+}
+
+type ExpenseDTO struct {
+	Date       string          `json:"date"`
+	Concept    string          `json:"concept"`
+	CategoryID int             `json:"category_id"`
+	Amount     float64         `json:"amount"`
+	Quantity   float64         `json:"quantity"`
+	Total      float64         `json:"total"`
+	ReceiptID  int             `json:"receipt_id"`
+	Meta       json.RawMessage `json:"meta"`
+}
+
+type IncomeDTO struct {
+	Date       string          `json:"date"`
+	Concept    string          `json:"concept"`
+	CategoryID int             `json:"category_id"`
+	Amount     float64         `json:"amount"`
+	Quantity   float64         `json:"quantity"`
+	Total      float64         `json:"total"`
+	ReceiptID  int             `json:"receipt_id"`
+	Meta       json.RawMessage `json:"meta"`
+}
+
+type FuelExpenseDTO struct {
+	ExpenseID int `json:"id_expense"`
+	DriverID  int `json:"id_driver"`
+}
+
+type StatsDTO struct {
+	NumberWeek    int     `json:"number_week"`
+	DateRangeInit string  `json:"date_range_init"`
+	DateRangeEnd  string  `json:"date_range_end"`
+	ExpenseTotal  float64 `json:"expense_total"`
+	IncomeTotal   float64 `json:"income_total"`
+	NetTotal      float64 `json:"net_total"`
+}
+
+// Scanner helper interfaces for database row scanning
+
+type Scanner interface {
+	Scan(...interface{}) error
+}
+
+// Scan functions for models
+
+func ScanDriver(row Scanner) (*Driver, error) {
+	var v Driver
+	err := row.Scan(&v.ID, &v.Name, &v.LicenseNumber, &v.Phone, &v.Email, &v.Address, &v.Meta, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanTruck(row Scanner) (*Truck, error) {
+	var v Truck
+	err := row.Scan(&v.ID, &v.Name, &v.VIN, &v.LicenseExpiration, &v.DriverID, &v.OverweightPermitID, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanTrailer(row Scanner) (*Trailer, error) {
+	var v Trailer
+	err := row.Scan(&v.ID, &v.Name, &v.Number, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanWell(row Scanner) (*Well, error) {
+	var v Well
+	err := row.Scan(&v.ID, &v.Name, &v.Location, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanTrip(row Scanner) (*Trip, error) {
+	var v Trip
+	err := row.Scan(&v.ID, &v.Date, &v.LoadNumber, &v.WellID, &v.TicketNumber, &v.DriverID, &v.TruckID, &v.TrailerID, &v.Meta, &v.Status, &v.TicketID, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanCategory(row Scanner) (*Category, error) {
+	var v Category
+	err := row.Scan(&v.ID, &v.Type, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanExpense(row Scanner) (*Expense, error) {
+	var v Expense
+	err := row.Scan(&v.ID, &v.Date, &v.Concept, &v.CategoryID, &v.Amount, &v.Quantity, &v.Total, &v.ReceiptID, &v.Meta, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanIncome(row Scanner) (*Income, error) {
+	var v Income
+	err := row.Scan(&v.ID, &v.Date, &v.Concept, &v.CategoryID, &v.Amount, &v.Quantity, &v.Total, &v.ReceiptID, &v.Meta, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanFuelExpense(row Scanner) (*FuelExpense, error) {
+	var v FuelExpense
+	err := row.Scan(&v.ID, &v.ExpenseID, &v.DriverID, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
+
+func ScanStats(row Scanner) (*Stats, error) {
+	var v Stats
+	err := row.Scan(&v.ID, &v.NumberWeek, &v.DateRangeInit, &v.DateRangeEnd, &v.ExpenseTotal, &v.IncomeTotal, &v.NetTotal, &v.CreatedAt, &v.UpdatedAt)
+	return &v, err
+}
