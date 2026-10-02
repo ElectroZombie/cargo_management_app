@@ -1,7 +1,7 @@
 # 📋 Cargo Management App - Development To-Do List
 
-**Project Status:** In Development — backend schema and service foundation completed  
-**Last Updated:** 2026-09-18  
+**Project Status:** In Development — backend schema, validation, migration, seed, and transaction foundation completed
+**Last Updated:** 2026-10-02  
 **Branch:** main
 
 ---
@@ -41,6 +41,18 @@
 - [x] Added load queries by driver, well, and active/inactive status.
 - [x] Added required-field validation for core create operations.
 - [x] Added not-found handling for reads, updates, and deletes.
+- [x] Added search support for drivers, loaders, vehicles, wells, and loads.
+
+### Database quality and operations
+- [x] Added a versioned migration system with rollback support.
+- [x] Added database seed data and repeatable test fixtures.
+- [x] Added complete validation for DTOs, including:
+  - [x] Date and date-range validation.
+  - [x] Positive numeric values for mileage, weights, rates, and totals.
+  - [x] Valid foreign-key references before writes.
+  - [x] VIN, license, ticket, and identifier format validation.
+- [x] Returned domain-specific validation and conflict errors instead of raw SQLite errors.
+- [x] Added transaction helpers for multi-entity operations.
 
 ### Application cleanup
 - [x] Removed the old cargo/shipment/user-oriented Wails bindings from `main.go`.
@@ -51,18 +63,9 @@
 ## 🚧 Remaining backend work
 
 ### Database quality and operations
-- [ ] Add a versioned migration system with rollback support.
-- [ ] Add database seed data and repeatable test fixtures.
-- [ ] Add complete validation for every DTO, including:
-  - [ ] Date and date-range validation.
-  - [ ] Positive numeric values for mileage, weights, rates, and totals.
-  - [ ] Valid foreign-key references before writes.
-  - [ ] VIN, license, ticket, and identifier format validation.
-- [ ] Return domain-specific validation and conflict errors instead of raw SQLite errors.
-- [ ] Add transaction helpers for multi-entity operations.
 - [ ] Add pagination, sorting, and combined filtering to list services.
-- [ ] Add search support where required.
 - [ ] Add service and database tests, including foreign-key and uniqueness tests.
+- [ ] Add broader query optimization and performance tuning for large datasets.
 
 ### Wails/API integration
 - [ ] Add Wails application methods that expose the new DTO-based services.
@@ -118,8 +121,9 @@
 | Operational database schema | ✅ Complete | Driver, loader, vehicle, well, and load tables defined |
 | DTOs and read models | ✅ Complete | DTOs created for all operational entities |
 | Database CRUD services | ✅ Complete | Core CRUD and load-specific queries implemented |
-| Validation | ⚠️ Partial | Required-field validation exists; full domain validation remains |
-| Migrations and seed data | ❌ Not started | Still required |
+| Validation | ✅ Complete | Full DTO validation, date checks, numeric checks, format validation, and FK checks added |
+| Migrations and seed data | ✅ Complete | Versioned migration system and repeatable seed fixtures implemented |
+| Transaction helpers | ✅ Complete | Transaction wrappers for multi-entity operations added |
 | Wails service bindings | ❌ Not started | New services are not yet exposed to the frontend |
 | Frontend screens and services | ❌ Not started | Operational UI remains to be built |
 | Dashboard and navigation | ❌ Not started | Must be designed without authentication screens |
