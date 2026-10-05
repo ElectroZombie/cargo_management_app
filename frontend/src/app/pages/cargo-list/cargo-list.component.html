@@ -1,0 +1,112 @@
+<div class="cargo-container">
+  <div class="page-header">
+    <h2 class="page-title">Cargo Management</h2>
+    <button (click)="toggleForm()" class="btn btn-primary">
+      {{ showForm ? 'Cancel' : 'Add New Cargo' }}
+    </button>
+  </div>
+
+  <div *ngIf="showForm" class="add-cargo-form card">
+    <h3>Add New Cargo</h3>
+    <form (ngSubmit)="addCargo()" #cargoForm="ngForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Cargo Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            [(ngModel)]="newCargo.name" 
+            name="name"
+            placeholder="Enter cargo name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="destination">Destination</label>
+          <input 
+            type="text" 
+            id="destination" 
+            [(ngModel)]="newCargo.destination" 
+            name="destination"
+            placeholder="Enter destination"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="weight">Weight (kg)</label>
+          <input 
+            type="number" 
+            id="weight" 
+            [(ngModel)]="newCargo.weight" 
+            name="weight"
+            placeholder="Enter weight"
+          />
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status" [(ngModel)]="newCargo.status" name="status">
+            <option value="Pending">Pending</option>
+            <option value="In Transit">In Transit</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input 
+          type="date" 
+          id="date" 
+          [(ngModel)]="newCargo.date" 
+          name="date"
+        />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Add Cargo</button>
+        <button type="button" (click)="resetForm()" class="btn btn-secondary">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="cargo-table-container card">
+    <h3>Cargo List</h3>
+    <div class="table-wrapper">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Weight (kg)</th>
+            <th>Destination</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cargo of cargoList">
+            <td>{{ cargo.id }}</td>
+            <td>{{ cargo.name }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(cargo.status)">
+                {{ cargo.status }}
+              </span>
+            </td>
+            <td>{{ cargo.weight }}</td>
+            <td>{{ cargo.destination }}</td>
+            <td>{{ cargo.date }}</td>
+            <td>
+              <button (click)="deleteCargo(cargo.id)" class="btn btn-danger btn-sm">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
