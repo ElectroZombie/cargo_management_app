@@ -1,0 +1,30 @@
+@import '../../shared/styles/variables';
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm 0;
+  font-size: $font-size-sm;
+
+  &__item {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+
+    &--current {
+      color: var(--color-text-primary);
+      font-weight: 500;
+      pointer-events: none;
+    }
+  }
+
+  &__separator {
+    color: var(--color-text-secondary);
+    opacity: 0.6;
+  }
+}

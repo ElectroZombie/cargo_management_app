@@ -1,0 +1,25 @@
+@import '../../../shared/styles/variables';
+
+.page {
+  @include flex-column;
+  gap: $spacing-md;
+
+  &__header {
+    @include flex-between;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+
+    h1 {
+      margin-bottom: $spacing-xs;
+    }
+  }
+
+  &__toolbar {
+    display: flex;
+    gap: $spacing-sm;
+
+    .form-control {
+      max-width: 340px;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+<div class="page page--narrow">
+  <div class="page__header">
+    <div>
+      <h1>{{ isEditing ? 'Edit Driver' : 'New Driver' }}</h1>
+      <p class="text-secondary">Driver details and license information.</p>
+    </div>
+  </div>
+
+  <app-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+      <div class="form-field" [class.invalid]="f['name'].invalid && f['name'].touched">
+        <label for="name">Full Name *</label>
+        <input id="name" class="form-control" formControlName="name" />
+        <span class="field-error" *ngIf="f['name'].invalid && f['name'].touched">
+          Name is required.
+        </span>
+      </div>
+
+      <div
+        class="form-field"
+        [class.invalid]="f['license_number'].invalid && f['license_number'].touched"
+      >
+        <label for="license_number">License Number *</label>
+        <input id="license_number" class="form-control" formControlName="license_number" />
+        <span
+          class="field-error"
+          *ngIf="f['license_number'].invalid && f['license_number'].touched"
+        >
+          Enter 4–30 letters, numbers, or hyphens.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['phone'].invalid && f['phone'].touched">
+        <label for="phone">Phone</label>
+        <input id="phone" class="form-control" formControlName="phone" />
+        <span class="field-error" *ngIf="f['phone'].invalid && f['phone'].touched">
+          Enter a valid phone number.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['email'].invalid && f['email'].touched">
+        <label for="email">Email</label>
+        <input id="email" type="email" class="form-control" formControlName="email" />
+        <span class="field-error" *ngIf="f['email'].invalid && f['email'].touched">
+          Enter a valid email address.
+        </span>
+      </div>
+
+      <div
+        class="form-field form-field--full"
+        [class.invalid]="f['address'].invalid && f['address'].touched"
+      >
+        <label for="address">Address</label>
+        <input id="address" class="form-control" formControlName="address" />
+      </div>
+
+      <div class="form-actions form-field--full">
+        <app-button variant="ghost" type="button" (clicked)="onCancel()">Cancel</app-button>
+        <app-button type="submit" [loading]="saving">
+          {{ isEditing ? 'Save Changes' : 'Create Driver' }}
+        </app-button>
+      </div>
+    </form>
+  </app-card>
+</div>

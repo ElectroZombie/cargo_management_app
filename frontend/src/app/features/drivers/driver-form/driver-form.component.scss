@@ -1,0 +1,40 @@
+@import '../../../shared/styles/variables';
+
+.page {
+  @include flex-column;
+  gap: $spacing-md;
+
+  &--narrow {
+    max-width: 760px;
+  }
+
+  &__header {
+    h1 {
+      margin-bottom: $spacing-xs;
+    }
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+
+  .form-field {
+    margin-bottom: 0;
+  }
+
+  .form-field--full {
+    grid-column: 1 / -1;
+  }
+
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-sm;
+}

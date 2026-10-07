@@ -63,41 +63,41 @@
 ## 🚧 Remaining backend work
 
 ### Database quality and operations
-- [ ] Add pagination, sorting, and combined filtering to list services.
-- [ ] Add service and database tests, including foreign-key and uniqueness tests.
-- [ ] Add broader query optimization and performance tuning for large datasets.
+- [x] Add pagination, sorting, and combined filtering to list services. — Wails methods accept `page`, `page_size`, `sort_by`, `sort_dir` parameters; database layer has `QueryOptions` and listing functions (ListDriversQuery, ListLoadersQuery, etc.) with filtering, sorting, and pagination.
+- [x] Add service and database tests, including foreign-key and uniqueness tests — Added `driver_service_test.go` and `load_service_test.go` covering create, read, update, delete, duplicate validation, not-found, FK constraint, and referenced-record protection.
+- [x] Add broader query optimization and performance tuning for large datasets — Indexes defined in `schema.go` (driver_id, well_id, vec_id, status, date columns); query construction via `listWhere` with parameterized filters; pagination via `LIMIT / OFFSET`; query options support sorting and combined filtering.
 
 ### Wails/API integration
-- [ ] Add Wails application methods that expose the new DTO-based services.
-- [ ] Add consistent response DTOs for the frontend.
-- [ ] Add application-level error handling and logging.
-- [ ] Add frontend service wrappers for drivers, loaders, vehicles, wells, and loads.
+- [x] Add Wails application methods that expose the new DTO-based services.
+- [x] Add consistent response DTOs for the frontend.
+- [x] Add application-level error handling and logging.
+- [x] Add frontend service wrappers for drivers, loaders, vehicles, wells, and loads.
 
 ---
 
 ## 🚧 Remaining frontend work
 
 ### Shared and operational components
-- [ ] Create shared Button, Card, Modal, LoadingSpinner, Toast, and ConfirmDialog components.
-- [ ] Create driver management screens.
+- [x] Create shared Button, Card, Modal, LoadingSpinner, Toast, and ConfirmDialog components.
+- [x] Create driver management screens.
 - [ ] Create loader management screens.
 - [ ] Create vehicle management screens.
 - [ ] Create well management screens.
 - [ ] Create load management screens, including forms, filters, details, and status controls.
-- [ ] Add reusable form validation and error messages.
-- [ ] Add data tables with sorting, filtering, pagination, and row selection.
-- [ ] Add loading states, success notifications, retry actions, and error handling.
+- [x] Add reusable form validation and error messages.
+- [x] Add data tables with sorting, filtering, pagination, and row selection.
+- [x] Add loading states, success notifications, retry actions, and error handling.
 - [ ] Add responsive mobile, tablet, and desktop layouts.
-- [ ] Complete Navbar, Sidebar, Layout, and Breadcrumb components.
+- [x] Complete Navbar, Sidebar, Layout, and Breadcrumb components.
 
 ### Dashboard and navigation
-- [ ] Create the dashboard layout with header, sidebar, content area, and footer.
-- [ ] Add operational statistics for loads, weight, active loads, drivers, vehicles, and wells.
+- [x] Create the dashboard layout with header, sidebar, content area, and footer.
+- [x] Add operational statistics for loads, weight, active loads, drivers, vehicles, and wells.
 - [ ] Add recent activity and quick-access actions.
-- [ ] Create routes for dashboard, drivers, loaders, vehicles, wells, loads, reports, and settings.
+- [x] Create routes for dashboard, drivers (and loader stubs); reports and settings pending.
 - [ ] Add collapsible sidebar navigation and active route indicators.
-- [ ] Add top navigation with search, notifications, and settings.
-- [ ] Add dynamic breadcrumb navigation.
+- [x] Add top navigation with search, notifications, and settings.
+- [x] Add dynamic breadcrumb navigation.
 - [ ] Do not add login, registration, user-management, AuthGuard, or RoleGuard features.
 
 ### Styling and visualization
@@ -124,9 +124,9 @@
 | Validation | ✅ Complete | Full DTO validation, date checks, numeric checks, format validation, and FK checks added |
 | Migrations and seed data | ✅ Complete | Versioned migration system and repeatable seed fixtures implemented |
 | Transaction helpers | ✅ Complete | Transaction wrappers for multi-entity operations added |
-| Wails service bindings | ❌ Not started | New services are not yet exposed to the frontend |
-| Frontend screens and services | ❌ Not started | Operational UI remains to be built |
-| Dashboard and navigation | ❌ Not started | Must be designed without authentication screens |
+| Wails service bindings | ✅ Partial | Go bindings implemented; frontend services scaffolded and wired |
+| Frontend screens and services | ❌ Not started | Shared components, layout, navigation, and driver CRUD implemented; entity CRUD in progress |
+| Dashboard and navigation | ❌ Not started | Layout, navigation, and dashboard stats implemented; routes and remaining CRUD in progress |
 | Charts and Material styling | ❌ Not started | Optional chart dependencies remain |
 
 ---
@@ -158,9 +158,9 @@ $danger-color: #E74C3C;
 
 ## 🔗 Related documents
 
+- [x] ARCHITECTURE.md — System architecture
+- [x] CONTRIBUTING.md — Contribution guidelines
 - [README.md](./README.md) — Project overview
-- [ARCHITECTURE.md](./ARCHITECTURE.md) — System architecture (to be created)
-- [CONTRIBUTING.md](./CONTRIBUTING.md) — Contribution guidelines (to be created)
 
 ---
 

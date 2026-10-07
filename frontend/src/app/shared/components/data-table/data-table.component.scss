@@ -1,0 +1,129 @@
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+.data-table {
+  @include surface-card;
+  overflow: hidden;
+
+  &__scroll {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 640px;
+  }
+
+  th.sortable {
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
+  }
+
+  &__header-content {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__sort {
+    opacity: 0.4;
+    font-size: 10px;
+
+    &.active {
+      opacity: 1;
+      color: var(--color-primary);
+    }
+  }
+
+  &__check {
+    width: 40px;
+    text-align: center;
+  }
+
+  &__actions-header,
+  &__actions {
+    width: 110px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  &__state {
+    @include flex-center;
+    gap: $spacing-sm;
+    padding: $spacing-lg;
+    color: var(--color-text-secondary);
+  }
+
+  tbody tr {
+    cursor: pointer;
+
+    &.selected {
+      background: rgba($primary-color, 0.1);
+    }
+  }
+
+  &__footer {
+    @include flex-between;
+    gap: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  &__range {
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+  }
+
+  &__pager {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__page-size {
+    padding: $spacing-xs $spacing-sm;
+    border: 1px solid var(--color-border);
+    border-radius: $border-radius-sm;
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+  }
+
+  &__page-info {
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+    min-width: 48px;
+    text-align: center;
+  }
+}
+
+.icon-btn {
+  @include flex-center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: $border-radius-sm;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.15s ease;
+
+  &:hover:not([disabled]) {
+    background: var(--color-hover);
+    color: var(--color-text-primary);
+  }
+
+  &[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &--danger:hover:not([disabled]) {
+    background: rgba($danger-color, 0.12);
+    color: $danger-color;
+  }
+}

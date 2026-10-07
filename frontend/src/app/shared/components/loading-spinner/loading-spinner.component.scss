@@ -1,0 +1,36 @@
+@import '../../../shared/styles/variables';
+
+.spinner {
+  display: inline-block;
+  border: 2px solid var(--color-neutral-light);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+
+  &-sm {
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
+  }
+
+  &-md {
+    width: 22px;
+    height: 22px;
+    border-width: 3px;
+  }
+
+  &-lg {
+    width: 36px;
+    height: 36px;
+    border-width: 4px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

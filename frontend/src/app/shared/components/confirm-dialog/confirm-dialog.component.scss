@@ -1,0 +1,14 @@
+@import '../../../shared/styles/variables';
+
+.confirm-dialog {
+  &__message {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: $line-height-normal;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+}

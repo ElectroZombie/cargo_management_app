@@ -1,0 +1,8 @@
+// Global stylesheet entry point.
+// Order matters: variables -> typography -> global -> theme.
+
+@import '../app/shared/styles/variables';
+@import '../app/shared/styles/typography';
+@import '../app/shared/styles/global';
+@import '../app/shared/styles/page';
+@import 'theme';

@@ -1,0 +1,23 @@
+<div class="layout">
+  <app-navbar
+    [appName]="appName"
+    [theme]="(theme$ | async) ?? 'light'"
+    [searchTerm]="searchTerm"
+    (toggleSidebar)="toggleSidebar()"
+    (toggleTheme)="toggleTheme()"
+    (search)="onSearch($event)"
+  ></app-navbar>
+
+  <div class="layout__body">
+    <app-sidebar [collapsed]="sidebarCollapsed"></app-sidebar>
+
+    <main class="layout__main">
+      <app-breadcrumb></app-breadcrumb>
+      <div class="layout__content page-enter">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+
+  <app-footer [appName]="appName"></app-footer>
+</div>
