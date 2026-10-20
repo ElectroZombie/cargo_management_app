@@ -1,0 +1,200 @@
+<div class="page page--narrow">
+  <div class="page__header">
+    <div>
+      <h1>{{ isEditing ? 'Edit Load' : 'New Load' }}</h1>
+      <p class="text-secondary">Hauling details, references, and measured values.</p>
+    </div>
+  </div>
+
+  <app-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+      <div class="form-field" [class.invalid]="f['date'].invalid && f['date'].touched">
+        <label for="date">Date *</label>
+        <input id="date" type="date" class="form-control" formControlName="date" />
+        <span class="field-error" *ngIf="f['date'].invalid && f['date'].touched">
+          A valid date is required.
+        </span>
+      </div>
+
+      <div
+        class="form-field"
+        [class.invalid]="f['load_number'].invalid && f['load_number'].touched"
+      >
+        <label for="load_number">Load Number *</label>
+        <input id="load_number" class="form-control" formControlName="load_number" />
+        <span class="field-error" *ngIf="f['load_number'].invalid && f['load_number'].touched">
+          Enter a valid load number (3–64 characters).
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['loader_id'].invalid && f['loader_id'].touched">
+        <label for="loader_id">Loader *</label>
+        <select id="loader_id" class="form-control" formControlName="loader_id">
+          <option [ngValue]="null" disabled>Select a loader…</option>
+          <option *ngFor="let loader of (loaders$ | async) || []" [ngValue]="loader.id">
+            {{ loader.name }}
+          </option>
+        </select>
+        <span class="field-error" *ngIf="f['loader_id'].invalid && f['loader_id'].touched">
+          Please select a loader.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['well_id'].invalid && f['well_id'].touched">
+        <label for="well_id">Well *</label>
+        <select id="well_id" class="form-control" formControlName="well_id">
+          <option [ngValue]="null" disabled>Select a well…</option>
+          <option *ngFor="let well of (wells$ | async) || []" [ngValue]="well.id">
+            {{ well.name }}
+          </option>
+        </select>
+        <span class="field-error" *ngIf="f['well_id'].invalid && f['well_id'].touched">
+          Please select a well.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['driver_id'].invalid && f['driver_id'].touched">
+        <label for="driver_id">Driver *</label>
+        <select id="driver_id" class="form-control" formControlName="driver_id">
+          <option [ngValue]="null" disabled>Select a driver…</option>
+          <option *ngFor="let driver of (drivers$ | async) || []" [ngValue]="driver.id">
+            {{ driver.name }}
+          </option>
+        </select>
+        <span class="field-error" *ngIf="f['driver_id'].invalid && f['driver_id'].touched">
+          Please select a driver.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['vec_id'].invalid && f['vec_id'].touched">
+        <label for="vec_id">Vehicle *</label>
+        <select id="vec_id" class="form-control" formControlName="vec_id">
+          <option value="" disabled>Select a vehicle…</option>
+          <option *ngFor="let vehicle of (vehicles$ | async) || []" [ngValue]="vehicle.vec_id">
+            {{ vehicle.vec_id }} — {{ vehicle.license_id }}
+          </option>
+        </select>
+        <span class="field-error" *ngIf="f['vec_id'].invalid && f['vec_id'].touched">
+          Please select a vehicle.
+        </span>
+      </div>
+
+      <div
+        class="form-field"
+        [class.invalid]="f['ticket_number'].invalid && f['ticket_number'].touched"
+      >
+        <label for="ticket_number">Ticket Number *</label>
+        <input id="ticket_number" class="form-control" formControlName="ticket_number" />
+        <span class="field-error" *ngIf="f['ticket_number'].invalid && f['ticket_number'].touched">
+          Enter a valid ticket number (3–64 characters).
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['ticket_id'].invalid && f['ticket_id'].touched">
+        <label for="ticket_id">Ticket ID</label>
+        <input id="ticket_id" class="form-control" formControlName="ticket_id" />
+        <span class="field-error" *ngIf="f['ticket_id'].invalid && f['ticket_id'].touched">
+          Use only letters, numbers, dots, slashes, or hyphens.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['miles'].invalid && f['miles'].touched">
+        <label for="miles">Miles *</label>
+        <input id="miles" type="number" min="0" step="0.1" class="form-control" formControlName="miles" />
+        <span class="field-error" *ngIf="f['miles'].invalid && f['miles'].touched">
+          Miles must be greater than zero.
+        </span>
+      </div>
+
+      <div
+        class="form-field"
+        [class.invalid]="f['trailer_number'].invalid && f['trailer_number'].touched"
+      >
+        <label for="trailer_number">Trailer Number</label>
+        <input
+          id="trailer_number"
+          type="number"
+          min="0"
+          class="form-control"
+          formControlName="trailer_number"
+        />
+        <span
+          class="field-error"
+          *ngIf="f['trailer_number'].invalid && f['trailer_number'].touched"
+        >
+          Trailer number must be zero or greater.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['net_weight'].invalid && f['net_weight'].touched">
+        <label for="net_weight">Net Weight *</label>
+        <input
+          id="net_weight"
+          type="number"
+          min="0"
+          step="0.01"
+          class="form-control"
+          formControlName="net_weight"
+        />
+        <span class="field-error" *ngIf="f['net_weight'].invalid && f['net_weight'].touched">
+          Net weight must be greater than zero.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['tons'].invalid && f['tons'].touched">
+        <label for="tons">Tons *</label>
+        <input id="tons" type="number" min="0" step="0.01" class="form-control" formControlName="tons" />
+        <span class="field-error" *ngIf="f['tons'].invalid && f['tons'].touched">
+          Tons must be greater than zero.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['ton_rate'].invalid && f['ton_rate'].touched">
+        <label for="ton_rate">Ton Rate *</label>
+        <input
+          id="ton_rate"
+          type="number"
+          min="0"
+          step="0.01"
+          class="form-control"
+          formControlName="ton_rate"
+        />
+        <span class="field-error" *ngIf="f['ton_rate'].invalid && f['ton_rate'].touched">
+          Ton rate must be greater than zero.
+        </span>
+      </div>
+
+      <div
+        class="form-field"
+        [class.invalid]="f['total_value'].invalid && f['total_value'].touched"
+      >
+        <label for="total_value">Total Value *</label>
+        <input
+          id="total_value"
+          type="number"
+          min="0"
+          step="0.01"
+          class="form-control"
+          formControlName="total_value"
+        />
+        <span class="field-error" *ngIf="f['total_value'].invalid && f['total_value'].touched">
+          Total value must be greater than zero.
+        </span>
+      </div>
+
+      <div class="form-field form-field--full">
+        <label class="form-check">
+          <input type="checkbox" formControlName="status" />
+          <span>Active load</span>
+        </label>
+      </div>
+
+      <div class="form-actions form-field--full">
+        <app-button variant="ghost" type="button" (clicked)="onCancel()">Cancel</app-button>
+        <app-button type="submit" [loading]="saving">
+          {{ isEditing ? 'Save Changes' : 'Create Load' }}
+        </app-button>
+      </div>
+    </form>
+  </app-card>
+</div>

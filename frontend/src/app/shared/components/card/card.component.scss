@@ -1,0 +1,40 @@
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+.card {
+  @include surface-card;
+  @include flex-column;
+  overflow: hidden;
+
+  &--padded .card__body {
+    padding: $spacing-md;
+  }
+
+  &__header {
+    @include flex-between;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-body-lg;
+    font-weight: 600;
+  }
+
+  &__subtitle {
+    margin: 2px 0 0;
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+  }
+
+  &__body {
+    flex: 1 1 auto;
+  }
+}

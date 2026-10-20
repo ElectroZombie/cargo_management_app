@@ -1,0 +1,73 @@
+@import 'variables';
+
+// Flex helpers
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Surface card
+@mixin surface-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $border-radius-md;
+  box-shadow: $shadow-sm;
+}
+
+// Truncate single line
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Responsive breakpoint
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: $breakpoint-xl) {
+      @content;
+    }
+  }
+}
+
+// Focus ring
+@mixin focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba($primary-color, 0.35);
+}
+
+// Card hover lift
+@mixin hover-lift {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-md;
+  }
+}

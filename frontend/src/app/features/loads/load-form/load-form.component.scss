@@ -1,0 +1,14 @@
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+.form-check {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  cursor: pointer;
+
+  input {
+    width: 16px;
+    height: 16px;
+  }
+}

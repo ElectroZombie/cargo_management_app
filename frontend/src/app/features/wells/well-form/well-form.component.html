@@ -1,0 +1,46 @@
+<div class="page page--narrow">
+  <div class="page__header">
+    <div>
+      <h1>{{ isEditing ? 'Edit Well' : 'New Well' }}</h1>
+      <p class="text-secondary">Well identification, client, and location.</p>
+    </div>
+  </div>
+
+  <app-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+      <div class="form-field" [class.invalid]="f['name'].invalid && f['name'].touched">
+        <label for="name">Name *</label>
+        <input id="name" class="form-control" formControlName="name" />
+        <span class="field-error" *ngIf="f['name'].invalid && f['name'].touched">
+          Name is required.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['client'].invalid && f['client'].touched">
+        <label for="client">Client</label>
+        <input id="client" class="form-control" formControlName="client" />
+        <span class="field-error" *ngIf="f['client'].invalid && f['client'].touched">
+          Client must be at most 200 characters.
+        </span>
+      </div>
+
+      <div
+        class="form-field form-field--full"
+        [class.invalid]="f['location'].invalid && f['location'].touched"
+      >
+        <label for="location">Location *</label>
+        <input id="location" class="form-control" formControlName="location" />
+        <span class="field-error" *ngIf="f['location'].invalid && f['location'].touched">
+          Location is required.
+        </span>
+      </div>
+
+      <div class="form-actions form-field--full">
+        <app-button variant="ghost" type="button" (clicked)="onCancel()">Cancel</app-button>
+        <app-button type="submit" [loading]="saving">
+          {{ isEditing ? 'Save Changes' : 'Create Well' }}
+        </app-button>
+      </div>
+    </form>
+  </app-card>
+</div>

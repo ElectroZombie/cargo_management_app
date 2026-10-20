@@ -1,31 +1,43 @@
-# Go
-/build
+# Build output
+/build/bin/
+/build/*.exe
+/dist/
 *.exe
+*.exe~
 *.dll
 *.so
 *.dylib
-/bin
-/dist
 
-# Node
-node_modules/
-npm-debug.log
-yarn-error.log
+# Go
+*.test
+*.out
+/vendor/
 
-# IDE
+# Local database
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/out-tsc/
+
+# Editor / OS
 .idea/
 .vscode/
-*.swp
-*.swo
-*~
-
-# OS
 .DS_Store
 Thumbs.db
+*.swp
+*~
 
-# Build outputs
-/frontend/dist
-/frontend/out-tsc
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
 
 # Environment
 .env

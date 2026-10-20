@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cargo Management App">
+  <rect width="64" height="64" rx="12" fill="#5a9fd4" />
+  <path d="M12 40V20a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v20" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" />
+  <path d="M36 26h8l8 8v6H36z" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" />
+  <circle cx="21" cy="44" r="5" fill="#ffffff" />
+  <circle cx="45" cy="44" r="5" fill="#ffffff" />
+</svg>

@@ -1,0 +1,60 @@
+// ============================================================
+// Application Theme
+// Integrates the design tokens with Angular Material and
+// supports light/dark mode switching via the [data-theme] attribute.
+// ============================================================
+
+// Angular Material core mixins are required for every Material component.
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+// Light theme built from the soft brand palette.
+$app-light-primary: mat.define-palette(mat.$blue-palette, 400);
+$app-light-accent: mat.define-palette(mat.$orange-palette, 300);
+$app-light-warn: mat.define-palette(mat.$red-palette, 500);
+
+$app-light-theme: mat.define-light-theme((
+  color: (
+    primary: $app-light-primary,
+    accent: $app-light-accent,
+    warn: $app-light-warn,
+  ),
+  typography: mat.define-typography-config(
+    $font-family: 'Roboto, sans-serif',
+  ),
+  density: 0,
+));
+
+// Dark theme mirrors the same palette with the dark surface tokens.
+$app-dark-primary: mat.define-palette(mat.$blue-palette, 300);
+$app-dark-accent: mat.define-palette(mat.$orange-palette, 200);
+$app-dark-warn: mat.define-palette(mat.$red-palette, 300);
+
+$app-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $app-dark-primary,
+    accent: $app-dark-accent,
+    warn: $app-dark-warn,
+  ),
+  typography: mat.define-typography-config(
+    $font-family: 'Roboto, sans-serif',
+  ),
+  density: 0,
+));
+
+// Emit both themes. The active one is selected by the [data-theme]
+// attribute applied to the <html> element by ThemeService.
+@include mat.all-component-themes($app-light-theme);
+@include mat.all-component-themes($app-dark-theme);
+
+// Map the runtime CSS custom properties onto the Material system
+// so components follow the same tokens as the rest of the app.
+[data-theme='dark'] {
+  @include mat.all-component-colors($app-dark-theme);
+}
+
+:root,
+[data-theme='light'] {
+  @include mat.all-component-colors($app-light-theme);
+}

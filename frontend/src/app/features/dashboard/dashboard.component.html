@@ -1,0 +1,46 @@
+<div class="dashboard">
+  <div class="dashboard__heading">
+    <div>
+      <h1>Operations Dashboard</h1>
+      <p class="text-secondary">A live snapshot of loading activity.</p>
+    </div>
+    <div class="dashboard__actions">
+      <a class="quick-action" routerLink="/loads/new">+ New Load</a>
+      <a class="quick-action quick-action--ghost" routerLink="/drivers/new">+ New Driver</a>
+    </div>
+  </div>
+
+  <app-loading-spinner *ngIf="loading$ | async" size="lg"></app-loading-spinner>
+
+  <ng-container *ngIf="stats$ | async as stats">
+    <div class="stat-grid">
+      <app-card *ngFor="let card of toCards(stats)" [padded]="true">
+        <div class="stat" [class]="'stat--' + card.accent">
+          <span class="stat__label">{{ card.label }}</span>
+          <span class="stat__value">{{ card.value }}</span>
+          <span class="stat__hint" *ngIf="card.hint">{{ card.hint }}</span>
+        </div>
+      </app-card>
+    </div>
+
+    <div class="dashboard__columns">
+      <app-card title="Recent Loads" subtitle="Most recent activity">
+        <app-data-table
+          [columns]="recentColumns"
+          [rows]="$any(stats.recent_loads || [])"
+          [showActions]="false"
+          emptyMessage="No loads recorded yet."
+        ></app-data-table>
+      </app-card>
+
+      <app-card title="Fleet at a Glance">
+        <div class="count-list">
+          <div *ngFor="let card of countCards(stats)" class="count-list__item">
+            <span class="count-list__label">{{ card.label }}</span>
+            <span class="count-list__value">{{ card.value }}</span>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </ng-container>
+</div>

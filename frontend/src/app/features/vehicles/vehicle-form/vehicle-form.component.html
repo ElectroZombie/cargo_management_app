@@ -1,0 +1,113 @@
+<div class="page page--narrow">
+  <div class="page__header">
+    <div>
+      <h1>{{ isEditing ? 'Edit Vehicle' : 'New Vehicle' }}</h1>
+      <p class="text-secondary">Truck, trailer, and license information.</p>
+    </div>
+  </div>
+
+  <app-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+      <div class="form-field" [class.invalid]="f['vec_id'].invalid && f['vec_id'].touched">
+        <label for="vec_id">Vehicle ID *</label>
+        <input id="vec_id" class="form-control" formControlName="vec_id" />
+        <span class="field-error" *ngIf="f['vec_id'].invalid && f['vec_id'].touched">
+          Vehicle ID is required.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['license_id'].invalid && f['license_id'].touched">
+        <label for="license_id">License Plate *</label>
+        <input id="license_id" class="form-control" formControlName="license_id" />
+        <span class="field-error" *ngIf="f['license_id'].invalid && f['license_id'].touched">
+          Enter 4–30 letters, numbers, or hyphens.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['vin'].invalid && f['vin'].touched">
+        <label for="vin">VIN *</label>
+        <input id="vin" class="form-control" formControlName="vin" maxlength="17" />
+        <span class="field-error" *ngIf="f['vin'].invalid && f['vin'].touched">
+          Enter a valid 17-character VIN.
+        </span>
+      </div>
+
+      <div
+        class="form-field"
+        [class.invalid]="f['license_expiration'].invalid && f['license_expiration'].touched"
+      >
+        <label for="license_expiration">License Expiration *</label>
+        <input
+          id="license_expiration"
+          type="date"
+          class="form-control"
+          formControlName="license_expiration"
+        />
+        <span
+          class="field-error"
+          *ngIf="f['license_expiration'].invalid && f['license_expiration'].touched"
+        >
+          A valid expiration date is required.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['driver_id'].invalid && f['driver_id'].touched">
+        <label for="driver_id">Driver *</label>
+        <select id="driver_id" class="form-control" formControlName="driver_id">
+          <option [ngValue]="null" disabled>Select a driver…</option>
+          <option *ngFor="let driver of (drivers$ | async) || []" [ngValue]="driver.id">
+            {{ driver.name }}
+          </option>
+        </select>
+        <span class="field-error" *ngIf="f['driver_id'].invalid && f['driver_id'].touched">
+          Please select a driver.
+        </span>
+      </div>
+
+      <div
+        class="form-field"
+        [class.invalid]="f['trailer_number'].invalid && f['trailer_number'].touched"
+      >
+        <label for="trailer_number">Trailer Number</label>
+        <input
+          id="trailer_number"
+          type="number"
+          min="0"
+          class="form-control"
+          formControlName="trailer_number"
+        />
+        <span
+          class="field-error"
+          *ngIf="f['trailer_number'].invalid && f['trailer_number'].touched"
+        >
+          Trailer number must be zero or greater.
+        </span>
+      </div>
+
+      <div
+        class="form-field form-field--full"
+        [class.invalid]="f['overweight_permit_id'].invalid && f['overweight_permit_id'].touched"
+      >
+        <label for="overweight_permit_id">Overweight Permit ID</label>
+        <input
+          id="overweight_permit_id"
+          class="form-control"
+          formControlName="overweight_permit_id"
+        />
+        <span
+          class="field-error"
+          *ngIf="f['overweight_permit_id'].invalid && f['overweight_permit_id'].touched"
+        >
+          Use only letters, numbers, hyphens, dots, or slashes.
+        </span>
+      </div>
+
+      <div class="form-actions form-field--full">
+        <app-button variant="ghost" type="button" (clicked)="onCancel()">Cancel</app-button>
+        <app-button type="submit" [loading]="saving">
+          {{ isEditing ? 'Save Changes' : 'Create Vehicle' }}
+        </app-button>
+      </div>
+    </form>
+  </app-card>
+</div>

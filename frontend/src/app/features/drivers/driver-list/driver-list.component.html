@@ -1,0 +1,46 @@
+<div class="page">
+  <div class="page__header">
+    <div>
+      <h1>Drivers</h1>
+      <p class="text-secondary">Manage the drivers available for assignment.</p>
+    </div>
+    <app-button (clicked)="onCreate()" icon="+">New Driver</app-button>
+  </div>
+
+  <div class="page__toolbar">
+    <input
+      type="search"
+      class="form-control"
+      placeholder="Search drivers…"
+      [value]="searchTerm"
+      (input)="onSearch($any($event.target).value)"
+    />
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [rows]="($any(drivers$ | async) || [])"
+    [loading]="(loading$ | async) || false"
+    [total]="(total$ | async) || 0"
+    [page]="page"
+    [pageSize]="pageSize"
+    [sortBy]="sortBy"
+    [sortDir]="sortDir"
+    emptyMessage="No drivers found."
+    (sortChange)="onSort($event)"
+    (pageChange)="onPage($event)"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+    (rowClick)="onEdit($event)"
+  ></app-data-table>
+
+  <app-confirm-dialog
+    [open]="confirmOpen"
+    title="Delete Driver"
+    [message]="'Delete ' + (pendingDelete?.name || 'this driver') + '? This cannot be undone.'"
+    confirmText="Delete"
+    [destructive]="true"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  ></app-confirm-dialog>
+</div>

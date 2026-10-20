@@ -1,0 +1,62 @@
+<div class="page page--narrow">
+  <div class="page__header">
+    <div>
+      <h1>{{ isEditing ? 'Edit Loader' : 'New Loader' }}</h1>
+      <p class="text-secondary">Loader company and contact details.</p>
+    </div>
+  </div>
+
+  <app-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+      <div class="form-field" [class.invalid]="f['name'].invalid && f['name'].touched">
+        <label for="name">Name *</label>
+        <input id="name" class="form-control" formControlName="name" />
+        <span class="field-error" *ngIf="f['name'].invalid && f['name'].touched">
+          Name is required.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['company'].invalid && f['company'].touched">
+        <label for="company">Company</label>
+        <input id="company" class="form-control" formControlName="company" />
+        <span class="field-error" *ngIf="f['company'].invalid && f['company'].touched">
+          Company must be at most 200 characters.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['phone'].invalid && f['phone'].touched">
+        <label for="phone">Phone</label>
+        <input id="phone" class="form-control" formControlName="phone" />
+        <span class="field-error" *ngIf="f['phone'].invalid && f['phone'].touched">
+          Enter a valid phone number.
+        </span>
+      </div>
+
+      <div class="form-field" [class.invalid]="f['email'].invalid && f['email'].touched">
+        <label for="email">Email</label>
+        <input id="email" type="email" class="form-control" formControlName="email" />
+        <span class="field-error" *ngIf="f['email'].invalid && f['email'].touched">
+          Enter a valid email address.
+        </span>
+      </div>
+
+      <div
+        class="form-field form-field--full"
+        [class.invalid]="f['address'].invalid && f['address'].touched"
+      >
+        <label for="address">Address</label>
+        <input id="address" class="form-control" formControlName="address" />
+        <span class="field-error" *ngIf="f['address'].invalid && f['address'].touched">
+          Address must be at most 500 characters.
+        </span>
+      </div>
+
+      <div class="form-actions form-field--full">
+        <app-button variant="ghost" type="button" (clicked)="onCancel()">Cancel</app-button>
+        <app-button type="submit" [loading]="saving">
+          {{ isEditing ? 'Save Changes' : 'Create Loader' }}
+        </app-button>
+      </div>
+    </form>
+  </app-card>
+</div>

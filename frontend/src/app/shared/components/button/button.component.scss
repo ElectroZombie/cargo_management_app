@@ -1,0 +1,88 @@
+@import '../../../shared/styles/variables';
+@import '../../../shared/styles/mixins';
+
+.btn {
+  @include flex-center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-body;
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  &-sm {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-sm;
+  }
+
+  &-lg {
+    padding: $spacing-md $spacing-lg;
+    font-size: $font-size-body-lg;
+  }
+
+  &-primary {
+    background: var(--color-primary);
+    color: #fff;
+
+    &:hover:not([disabled]) {
+      filter: brightness(0.95);
+    }
+  }
+
+  &-secondary {
+    background: var(--color-secondary);
+    color: #fff;
+
+    &:hover:not([disabled]) {
+      filter: brightness(0.95);
+    }
+  }
+
+  &-danger {
+    background: var(--color-danger);
+    color: #fff;
+
+    &:hover:not([disabled]) {
+      filter: brightness(0.95);
+    }
+  }
+
+  &-ghost {
+    background: transparent;
+    color: var(--color-text-secondary);
+
+    &:hover:not([disabled]) {
+      background: var(--color-hover);
+    }
+  }
+
+  &-outline {
+    background: transparent;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+
+    &:hover:not([disabled]) {
+      background: rgba($primary-color, 0.08);
+    }
+  }
+
+  &__icon {
+    font-size: 1.1em;
+  }
+}

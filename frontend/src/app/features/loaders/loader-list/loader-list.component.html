@@ -1,0 +1,46 @@
+<div class="page">
+  <div class="page__header">
+    <div>
+      <h1>Loaders</h1>
+      <p class="text-secondary">Manage loader companies and contacts.</p>
+    </div>
+    <app-button (clicked)="onCreate()" icon="+">New Loader</app-button>
+  </div>
+
+  <div class="page__toolbar">
+    <input
+      type="search"
+      class="form-control"
+      placeholder="Search loaders…"
+      [value]="searchTerm"
+      (input)="onSearch($any($event.target).value)"
+    />
+  </div>
+
+  <app-data-table
+    [columns]="columns"
+    [rows]="($any(loaders$ | async) || [])"
+    [loading]="(loading$ | async) || false"
+    [total]="(total$ | async) || 0"
+    [page]="page"
+    [pageSize]="pageSize"
+    [sortBy]="sortBy"
+    [sortDir]="sortDir"
+    emptyMessage="No loaders found."
+    (sortChange)="onSort($event)"
+    (pageChange)="onPage($event)"
+    (edit)="onEdit($event)"
+    (delete)="onDelete($event)"
+    (rowClick)="onEdit($event)"
+  ></app-data-table>
+
+  <app-confirm-dialog
+    [open]="confirmOpen"
+    title="Delete Loader"
+    [message]="'Delete ' + (pendingDelete?.name || 'this loader') + '? This cannot be undone.'"
+    confirmText="Delete"
+    [destructive]="true"
+    (confirmed)="confirmDelete()"
+    (cancelled)="cancelDelete()"
+  ></app-confirm-dialog>
+</div>

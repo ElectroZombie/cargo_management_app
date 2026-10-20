@@ -1,0 +1,37 @@
+@import '../app/shared/styles/variables';
+
+// Component-level theme touches that depend on runtime tokens.
+.card {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--color-text-primary);
+
+  th,
+  td {
+    padding: $spacing-sm $spacing-md;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  th {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--color-text-secondary);
+    background: var(--color-background);
+  }
+
+  tbody tr {
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background: var(--color-hover);
+    }
+  }
+}

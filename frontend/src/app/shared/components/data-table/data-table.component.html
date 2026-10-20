@@ -1,0 +1,143 @@
+<div class="data-table">
+  <div class="data-table__scroll">
+    <table>
+      <thead>
+        <tr>
+          <th *ngIf="selectable" class="data-table__check">
+            <input
+              type="checkbox"
+              [checked]="isAllSelected"
+              (change)="onToggleAll($event)"
+              aria-label="Select all rows"
+            />
+          </th>
+          <th
+            *ngFor="let column of columns"
+            [class.sortable]="column.sortable"
+            [style.text-align]="column.align || 'left'"
+            (click)="onSort(column)"
+          >
+            <span class="data-table__header-content">
+              {{ column.header }}
+              <span
+                *ngIf="column.sortable"
+                class="data-table__sort"
+                [class.active]="sortBy === column.key"
+              >
+                {{ sortBy === column.key && sortDir === 'DESC' ? '▾' : '▴' }}
+              </span>
+            </span>
+          </th>
+          <th *ngIf="showActions" class="data-table__actions-header">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="loading">
+          <td [attr.colspan]="columns.length + (selectable ? 1 : 0) + (showActions ? 1 : 0)">
+            <div class="data-table__state">
+              <app-loading-spinner size="md"></app-loading-spinner>
+              <span>Loading…</span>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="!loading && rows.length === 0">
+          <td [attr.colspan]="columns.length + (selectable ? 1 : 0) + (showActions ? 1 : 0)">
+            <div class="data-table__state">{{ emptyMessage }}</div>
+          </td>
+        </tr>
+
+        <tr
+          *ngFor="let row of rows; trackBy: trackById"
+          [class.selected]="selectable && isSelected(row)"
+          (click)="onRowClick(row)"
+        >
+          <td *ngIf="selectable" class="data-table__check" (click)="onToggleRow(row, $event)">
+            <input
+              type="checkbox"
+              [checked]="isSelected(row)"
+              (click)="$event.stopPropagation()"
+              (change)="onToggleRow(row, $event)"
+              aria-label="Select row"
+            />
+          </td>
+
+          <td
+            *ngFor="let column of columns"
+            [style.text-align]="column.align || 'left'"
+          >
+            <span
+              *ngIf="isBoolean(column)"
+              class="badge"
+              [class.badge-success]="getBooleanValue(column, row)"
+              [class.badge-danger]="!getBooleanValue(column, row)"
+            >
+              {{ formatCell(column, row) }}
+            </span>
+            <span *ngIf="!isBoolean(column)">{{ formatCell(column, row) }}</span>
+          </td>
+
+          <td *ngIf="showActions" class="data-table__actions">
+            <button
+              type="button"
+              class="icon-btn"
+              title="Edit"
+              (click)="onEdit(row, $event)"
+            >
+              ✎
+            </button>
+            <button
+              type="button"
+              class="icon-btn icon-btn--danger"
+              title="Delete"
+              (click)="onDelete(row, $event)"
+            >
+              🗑
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="data-table__footer" *ngIf="total > 0">
+    <span class="data-table__range">
+      {{ rangeStart }}–{{ rangeEnd }} of {{ total }}
+    </span>
+
+    <div class="data-table__pager">
+      <select
+        class="data-table__page-size"
+        [value]="pageSize"
+        (change)="onPageSizeChange($any($event.target).value)"
+        aria-label="Rows per page"
+      >
+        <option [value]="10">10</option>
+        <option [value]="25">25</option>
+        <option [value]="50">50</option>
+        <option [value]="100">100</option>
+      </select>
+
+      <button
+        type="button"
+        class="icon-btn"
+        [disabled]="page <= 1"
+        (click)="previousPage()"
+        title="Previous page"
+      >
+        ‹
+      </button>
+      <span class="data-table__page-info">{{ page }} / {{ totalPages }}</span>
+      <button
+        type="button"
+        class="icon-btn"
+        [disabled]="page >= totalPages"
+        (click)="nextPage()"
+        title="Next page"
+      >
+        ›
+      </button>
+    </div>
+  </div>
+</div>
